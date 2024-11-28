@@ -5,13 +5,15 @@ import 'package:stacked_state_management/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked_state_management/services/api_service.dart';
+import 'package:stacked_state_management/ui/views/book_details/book_details_view.dart';
 // @stacked-import
 
 @StackedApp(
   routes: [
     MaterialRoute(page: HomeView),
     MaterialRoute(page: StartupView),
-    // @stacked-route
+    MaterialRoute(page: BookDetailsView),
+// @stacked-route
   ],
   dependencies: [
     LazySingleton(classType: BottomSheetService),
