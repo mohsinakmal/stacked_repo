@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked/stacked_annotations.dart';
 import 'home_viewmodel.dart';
 
-class HomeView extends StackedView<HomeViewModel> {
+@FormView(fields: [
+  FormTextField(name: 'searchTerms'),
+]
+)
+class HomeView extends StackedView<HomeViewModel>{
   const HomeView({Key? key}) : super(key: key);
 
   @override
@@ -28,6 +33,7 @@ class HomeView extends StackedView<HomeViewModel> {
                         title: Text(
                           book?.volumeInfo.title ?? '',
                         ),
+                        onTap: () => viewModel.navigateToBook(book: book!),
                       ),
                     );
                   }),

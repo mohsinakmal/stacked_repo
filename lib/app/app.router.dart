@@ -8,7 +8,8 @@
 import 'package:flutter/material.dart' as _i5;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i6;
+import 'package:stacked_services/stacked_services.dart' as _i7;
+import 'package:stacked_state_management/models/book.dart' as _i6;
 import 'package:stacked_state_management/ui/views/book_details/book_details_view.dart'
     as _i4;
 import 'package:stacked_state_management/ui/views/home/home_view.dart' as _i2;
@@ -59,8 +60,10 @@ class StackedRouter extends _i1.RouterBase {
       );
     },
     _i4.BookDetailsView: (data) {
+      final args = data.getArgs<BookDetailsViewArguments>(nullOk: false);
       return _i5.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i4.BookDetailsView(),
+        builder: (context) =>
+            _i4.BookDetailsView(key: args.key, book: args.book),
         settings: data,
       );
     },
@@ -73,7 +76,34 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i6.NavigationService {
+class BookDetailsViewArguments {
+  const BookDetailsViewArguments({
+    this.key,
+    required this.book,
+  });
+
+  final _i5.Key? key;
+
+  final _i6.Book book;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "book": "$book"}';
+  }
+
+  @override
+  bool operator ==(covariant BookDetailsViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.book == book;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ book.hashCode;
+  }
+}
+
+extension NavigatorStateExtension on _i7.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -102,14 +132,17 @@ extension NavigatorStateExtension on _i6.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToBookDetailsView([
+  Future<dynamic> navigateToBookDetailsView({
+    _i5.Key? key,
+    required _i6.Book book,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return navigateTo<dynamic>(Routes.bookDetailsView,
+        arguments: BookDetailsViewArguments(key: key, book: book),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -144,14 +177,17 @@ extension NavigatorStateExtension on _i6.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithBookDetailsView([
+  Future<dynamic> replaceWithBookDetailsView({
+    _i5.Key? key,
+    required _i6.Book book,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
+  }) async {
     return replaceWith<dynamic>(Routes.bookDetailsView,
+        arguments: BookDetailsViewArguments(key: key, book: book),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
