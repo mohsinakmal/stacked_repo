@@ -5,7 +5,7 @@ import 'package:stacked_state_management/app/app.router.dart';
 import 'package:stacked_state_management/models/book.dart';
 import 'package:stacked_state_management/services/api_service.dart';
 
-class HomeViewModel extends FutureViewModel<List<Book>> {
+class HomeViewModel extends FutureViewModel<List<Book>> with FormStateHelper{
   final _apiService = locator<ApiService>();
   final _navigationService = locator<NavigationService>();
 

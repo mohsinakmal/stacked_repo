@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'home_viewmodel.dart';
+import 'home_view.form.dart';
 
 @FormView(fields: [
   FormTextField(name: 'searchTerms'),
-]
-)
-class HomeView extends StackedView<HomeViewModel>{
+])
+class HomeView extends StackedView<HomeViewModel> with $HomeView {
   const HomeView({Key? key}) : super(key: key);
+
+  @override
+  void onViewModelReady(HomeViewModel viewModel) {
+    syncFormWithViewModel(viewModel);
+  }
 
   @override
   Widget builder(
@@ -24,19 +29,26 @@ class HomeView extends StackedView<HomeViewModel>{
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : ListView.builder(
-                  itemCount: viewModel.data?.length,
-                  itemBuilder: (context, index) {
-                    final book = viewModel.data?[index];
-                    return Card(
-                      child: ListTile(
-                        title: Text(
-                          book?.volumeInfo.title ?? '',
-                        ),
-                        onTap: () => viewModel.navigateToBook(book: book!),
-                      ),
-                    );
-                  }),
+              : Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  TextField(controller: searchTermsController,),
+                  ListView.builder(
+                    shrinkWrap: true,
+                      itemCount: viewModel.data?.length,
+                      itemBuilder: (context, index) {
+                        final book = viewModel.data?[index];
+                        return Card(
+                          child: ListTile(
+                            title: Text(
+                              book?.volumeInfo.title ?? '',
+                            ),
+                            onTap: () => viewModel.navigateToBook(book: book!),
+                          ),
+                        );
+                      }),
+                ],
+              ),
         ),
       ),
     );
