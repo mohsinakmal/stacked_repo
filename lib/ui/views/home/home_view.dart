@@ -22,6 +22,9 @@ class HomeView extends StackedView<HomeViewModel> with $HomeView {
     Widget? child,
   ) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: viewModel.fetchNewCategory,
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -32,6 +35,7 @@ class HomeView extends StackedView<HomeViewModel> with $HomeView {
               : Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  // we get searchTermsController by importing the mixin and we need to generate home view form by stacked generate or by build runner
                   TextField(controller: searchTermsController,),
                   ListView.builder(
                     shrinkWrap: true,
