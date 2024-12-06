@@ -20,6 +20,8 @@ Future<void> setupLocator({
   EnvironmentFilter? environmentFilter,
 }) async {
 // Register environments
+// here are we using environment for different commomn environment
+// like development staging and production
   locator.registerEnvironment(
       environment: environment, environmentFilter: environmentFilter);
 
